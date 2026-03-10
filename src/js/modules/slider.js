@@ -14,43 +14,6 @@ function slider({container, slide, nextArrow, prevArrow, totalCounter, currentCo
     let slideIndex = 1;
     let offset = 0;
 
-    // function showSlides(n) {
-    //     if (n > slides.length) {
-    //         slideIndex = 1;
-    //     }
-
-    //     if (n < 1) {
-    //         slideIndex = slides.length;
-    //     }
-
-    //     slides.forEach(item => {
-    //         item.style.display = 'none';
-    //     });
-    //     slides[slideIndex - 1].style.display = 'block';
-
-    //     if (slideIndex < 10) {
-    //         current.textContent = `0${slideIndex}`;
-    //     } else {
-    //         current.textContent = slideIndex;
-    //     }
-    // }
-
-    // if (slides.length < 10) {
-    //     total.textContent = `0${slides.length}`;
-    // } else {
-    //     total.textContent = slides.length;
-    // }
-
-    // showSlides(slideIndex);
-
-    // next.addEventListener('click', () => {
-    //     showSlides(slideIndex = slideIndex + 1);
-    // });
-
-    // prev.addEventListener('click', () => {
-    //     showSlides(slideIndex = slideIndex - 1);
-    // });
-
     if (slides.length < 10) {
         total.textContent = `0${slides.length}`;
         current.textContent = `0${slideIndex}`;

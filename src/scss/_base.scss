@@ -23,9 +23,6 @@ a {
     cursor: pointer;
     transition: 0.3s all;
     outline: none;
-    &_white {
-        background-color: #fff;
-    }
     &_dark {
         background-color: $dark;
         color: #fff;
@@ -48,7 +45,7 @@ a {
     width: 330px;
     height: 1px;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.5);;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .title {

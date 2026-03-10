@@ -53,40 +53,37 @@ gulp.task("build-sass", () => {
                 .pipe(browsersync.stream());
 });
 
-gulp.task("copy-assets", () => {
-    gulp.src("./src/icons/**/*.*")
-        .pipe(gulp.dest(dist + "/icons"));
-
-    return gulp.src("./src/img/**/*.*")
-                .pipe(gulp.dest(dist + "/img"))
-                .pipe(browsersync.stream());
+gulp.task("copy-icons", () => {
+    return gulp.src("./src/icons/**/*.*")
+               .pipe(gulp.dest(dist + "/icons"));
 });
+
+gulp.task("copy-img", () => {
+    return gulp.src("./src/img/**/*.*")
+               .pipe(gulp.dest(dist + "/img"))
+               .pipe(browsersync.stream());
+});
+
+gulp.task("copy-assets", gulp.parallel("copy-icons", "copy-img"));
 
 gulp.task("watch", () => {
     browsersync.init({
-		server: "./dist/",
-		port: 4000,
-		notify: true
+        server: "./dist/",
+        port: 4000,
+        notify: true
     });
 
     gulp.watch("./src/index.html", gulp.parallel("copy-html"));
-    gulp.watch("./src/icons/**/*.*", gulp.parallel("copy-assets"));
-    gulp.watch("./src/img/**/*.*", gulp.parallel("copy-assets"));
+    gulp.watch("./src/icons/**/*.*", gulp.parallel("copy-icons"));
+    gulp.watch("./src/img/**/*.*", gulp.parallel("copy-img"));
     gulp.watch("./src/scss/**/*.scss", gulp.parallel("build-sass"));
     gulp.watch("./src/js/**/*.js", gulp.parallel("build-js"));
 });
 
 gulp.task("build", gulp.parallel("copy-html", "copy-assets", "build-sass", "build-js"));
 
-gulp.task("prod", () => {
-    gulp.src("./src/index.html")
-        .pipe(gulp.dest(dist));
-    gulp.src("./src/img/**/*.*")
-        .pipe(gulp.dest(dist + "/img"));
-    gulp.src("./src/icons/**/*.*")
-        .pipe(gulp.dest(dist + "/icons"));
-
-    gulp.src("./src/js/main.js")
+gulp.task("prod-js", () => {
+    return gulp.src("./src/js/main.js")
         .pipe(webpack({
             mode: 'production',
             output: {
@@ -112,12 +109,16 @@ gulp.task("prod", () => {
               }
         }))
         .pipe(gulp.dest(dist + '/js'));
-    
+});
+
+gulp.task("prod-sass", () => {
     return gulp.src("./src/scss/style.scss")
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([autoprefixer()]))
         .pipe(cleanCSS())
         .pipe(gulp.dest(dist + '/css'));
 });
+
+gulp.task("prod", gulp.parallel("copy-html", "copy-icons", "copy-img", "prod-js", "prod-sass"));
 
 gulp.task("default", gulp.parallel("watch", "build"));
