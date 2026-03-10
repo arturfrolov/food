@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "webpack": "webpack --config webpack.config.js",
     "dev": "gulp",
-    "prod": "gulp prod"
+    "build": "gulp prod"
   },
   "author": "",
   "license": "ISC",
